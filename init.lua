@@ -191,8 +191,8 @@ vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower win
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
 -- eirik custom commands --
-vim.keymap.set('n', '<F5>', ':!run.cmd<CR>', { desc = 'execute run.cmd' })
-
+vim.keymap.set('n', '<F5>', ':w|!run.cmd<CR>', { desc = 'execute run.cmd' })
+vim.keymap.set('n', '<leader>ff', vim.lsp.buf.format, { desc = 'format code with lsp' })
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
@@ -289,6 +289,7 @@ require('lazy').setup({
         ['<leader>r'] = { name = '[R]ename', _ = 'which_key_ignore' },
         ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
         ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
+        ['<leader>f'] = { name = '[F]ormat', _ = 'which_key_ignore' },
       }
     end,
   },
@@ -617,6 +618,7 @@ require('lazy').setup({
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
+        astyle = {},
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --
