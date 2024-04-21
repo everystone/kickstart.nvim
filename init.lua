@@ -89,7 +89,7 @@ Kickstart Guide:
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
-
+-- vim.lsp.set_log_level 'debug'
 -- Set to true if you have a Nerd Font installed
 vim.g.have_nerd_font = false
 
@@ -191,8 +191,11 @@ vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower win
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
 -- eirik custom commands --
-vim.keymap.set('n', '<F5>', ':w|!run.cmd<CR>', { desc = 'execute run.cmd' })
+vim.keymap.set('n', '<F5>', ':w|!run.cmd<CR>', { desc = 'execute run.cmd and check errors' })
 vim.keymap.set('n', '<leader>ff', vim.lsp.buf.format, { desc = 'format code with lsp' })
+vim.keymap.set('n', '<leader>bb', ':make|:cw', { desc = 'Build with make' })
+
+-- vim.keymap.set('n', '<c-/>', 'gcc', { desc = 'comment' })
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
@@ -571,6 +574,31 @@ require('lazy').setup({
         },
       }
 
+      require('lspconfig')['zls'].setup {
+
+        settings = {
+          zls = {
+            path = 'C:/zig/',
+            Zls = {
+              path = 'c:/zig/zls',
+              enableAutofix = true,
+              enable_snippets = true,
+              enable_ast_check_diagnostics = true,
+              enable_autofix = true,
+              enable_import_embedfile_argument_completions = true,
+              warn_style = true,
+              enable_semantic_tokens = true,
+              enable_inlay_hints = true,
+              inlay_hints_hide_redundant_param_names = true,
+              inlay_hints_hide_redundant_param_names_last_token = true,
+              operator_completions = true,
+              include_at_in_builtins = true,
+              max_detail_length = 1048576,
+            },
+          },
+        },
+      }
+
       -- Ensure the servers and tools above are installed
       --  To check the current status of installed tools and/or manually install
       --  other tools, you can run
@@ -696,7 +724,7 @@ require('lazy').setup({
           -- Accept ([y]es) the completion.
           --  This will auto-import if your LSP supports it.
           --  This will expand snippets if the LSP sent a snippet.
-          ['<C-y>'] = cmp.mapping.confirm { select = true },
+          ['<return>'] = cmp.mapping.confirm { select = true },
 
           -- Manually trigger a completion from nvim-cmp.
           --  Generally you don't need this, because nvim-cmp will display
