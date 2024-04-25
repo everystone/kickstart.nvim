@@ -191,9 +191,10 @@ vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower win
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
 -- eirik custom commands --
-vim.keymap.set('n', '<F5>', ':w|!run.cmd<CR>', { desc = 'execute run.cmd and check errors' })
+vim.keymap.set('n', '<F5>', ':make && .\towerkill.exe<CR>', { desc = 'execute run.cmd and check errors' })
 vim.keymap.set('n', '<leader>ff', vim.lsp.buf.format, { desc = 'format code with lsp' })
 vim.keymap.set('n', '<leader>bb', ':make|:cw', { desc = 'Build with make' })
+-- vim.keymap.set('n', '<C-h>', ':ClangdSwitchSourceHeader'
 
 -- vim.keymap.set('n', '<c-/>', 'gcc', { desc = 'comment' })
 -- [[ Basic Autocommands ]]
@@ -262,6 +263,14 @@ require('lazy').setup({
         changedelete = { text = '~' },
       },
     },
+  },
+  {
+    'ray-x/lsp_signature.nvim',
+    event = 'VeryLazy',
+    opts = {},
+    config = function(_, opts)
+      require('lsp_signature').setup(opts)
+    end,
   },
 
   -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
@@ -598,6 +607,8 @@ require('lazy').setup({
           },
         },
       }
+
+      require('lsp_signature').setup {}
 
       -- Ensure the servers and tools above are installed
       --  To check the current status of installed tools and/or manually install
