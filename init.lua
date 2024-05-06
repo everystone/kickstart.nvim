@@ -106,7 +106,7 @@ vim.opt.number = true
 
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.opt.mouse = 'a'
-
+vim.opt.swapfile = false
 -- Don't show the mode, since it's already in the status line
 vim.opt.showmode = false
 
@@ -191,9 +191,9 @@ vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower win
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
 -- eirik custom commands --
-vim.keymap.set('n', '<F5>', ':make && .\towerkill.exe<CR>', { desc = 'execute run.cmd and check errors' })
+vim.keymap.set('n', '<F5>', ':make run<CR>', { desc = 'make run' })
 vim.keymap.set('n', '<leader>ff', vim.lsp.buf.format, { desc = 'format code with lsp' })
-vim.keymap.set('n', '<leader>bb', ':make|:cw', { desc = 'Build with make' })
+vim.keymap.set('n', '<leader>bb', ':make|:cw<CR>', { desc = 'Build with make' })
 -- vim.keymap.set('n', '<C-h>', ':ClangdSwitchSourceHeader'
 
 -- vim.keymap.set('n', '<c-/>', 'gcc', { desc = 'comment' })
