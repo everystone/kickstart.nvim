@@ -196,6 +196,19 @@ vim.keymap.set('n', '<leader>ff', vim.lsp.buf.format, { desc = 'format code with
 vim.keymap.set('n', '<leader>bb', ':make|:cw<CR>', { desc = 'Build with make' })
 -- vim.keymap.set('n', '<C-h>', ':ClangdSwitchSourceHeader'
 
+-- glsl support for .fs and .vs
+vim.cmd [[
+au! BufNewFile,BufRead *.vs,*.fs set ft=glsl
+]]
+
+-- vim.api.nvim_create_autocmd({'BufNewFile', 'BufRead'}, {
+-- callback = function()
+--          if vim.fn.search("{{.\\+}}", "nw") ~= 0 then
+--                 local buf = vim.api.nvim_get_current_buf()
+--                 vim.api.nvim_buf_set_option(buf, "filetype", "gotmpl")
+--             end
+--   end,
+-- });
 -- vim.keymap.set('n', '<c-/>', 'gcc', { desc = 'comment' })
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -246,6 +259,7 @@ require('lazy').setup({
 
   -- "gc" to comment visual regions/lines
   { 'numToStr/Comment.nvim', opts = {} },
+  { 'tikhomirov/vim-glsl' },
 
   -- Here is a more advanced example where we pass configuration
   -- options to `gitsigns.nvim`. This is equivalent to the following Lua:
