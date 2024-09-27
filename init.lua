@@ -164,7 +164,7 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
-vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
+-- vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
@@ -194,6 +194,7 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 vim.keymap.set('n', '<F5>', ':make run<CR>', { desc = 'make run' })
 vim.keymap.set('n', '<leader>ff', vim.lsp.buf.format, { desc = 'format code with lsp' })
 vim.keymap.set('n', '<leader>bb', ':make|:cw<CR>', { desc = 'Build with make' })
+vim.keymap.set('n', '<leader>e', vim.diagnostic.goto_next, { desc = 'Next error' })
 -- vim.keymap.set('n', '<C-h>', ':ClangdSwitchSourceHeader'
 
 -- glsl support for .fs and .vs
@@ -306,16 +307,19 @@ require('lazy').setup({
     'folke/which-key.nvim',
     event = 'VimEnter', -- Sets the loading event to 'VimEnter'
     config = function() -- This is the function that runs, AFTER loading
-      require('which-key').setup()
-
-      -- Document existing key chains
-      require('which-key').register {
-        ['<leader>c'] = { name = '[C]ode', _ = 'which_key_ignore' },
-        ['<leader>d'] = { name = '[D]ocument', _ = 'which_key_ignore' },
-        ['<leader>r'] = { name = '[R]ename', _ = 'which_key_ignore' },
-        ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
-        ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
-        ['<leader>f'] = { name = '[F]ormat', _ = 'which_key_ignore' },
+      require('which-key').setup {
+        { '', group = '[C]ode' },
+        { '', desc = '<leader>r_', hidden = true },
+        { '', group = '[R]ename' },
+        { '', group = '[S]earch' },
+        { '', desc = '<leader>s_', hidden = true },
+        { '', group = '[W]orkspace' },
+        { '', desc = '<leader>f_', hidden = true },
+        { '', desc = '<leader>d_', hidden = true },
+        { '', group = '[F]ormat' },
+        { '', desc = '<leader>c_', hidden = true },
+        { '', group = '[D]ocument' },
+        { '', desc = '<leader>w_', hidden = true },
       }
     end,
   },
@@ -848,8 +852,10 @@ require('lazy').setup({
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
+    main = 'nvim-treesitter.configs', -- Sets main module to use for opts
+    -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
     opts = {
-      ensure_installed = { 'bash', 'c', 'html', 'lua', 'luadoc', 'markdown', 'vim', 'vimdoc' },
+      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' },
       -- Autoinstall languages that are not installed
       auto_install = true,
       highlight = {
@@ -861,19 +867,6 @@ require('lazy').setup({
       },
       indent = { enable = true, disable = { 'ruby' } },
     },
-    config = function(_, opts)
-      -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
-
-      ---@diagnostic disable-next-line: missing-fields
-      require('nvim-treesitter.configs').setup(opts)
-
-      -- There are additional nvim-treesitter modules that you can use to interact
-      -- with nvim-treesitter. You should go explore a few and see what interests you:
-      --
-      --    - Incremental selection: Included, see `:help nvim-treesitter-incremental-selection-mod`
-      --    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
-      --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
-    end,
   },
 
   -- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
