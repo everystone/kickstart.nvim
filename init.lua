@@ -261,7 +261,6 @@ require('lazy').setup({
   { 'numToStr/Comment.nvim', opts = {} },
   { 'tikhomirov/vim-glsl' },
 
-
   -- Here is a more advanced example where we pass configuration
   -- options to `gitsigns.nvim`. This is equivalent to the following Lua:
   --    require('gitsigns').setup({ ... })
@@ -278,14 +277,6 @@ require('lazy').setup({
         changedelete = { text = '~' },
       },
     },
-  },
-  {
-    'ray-x/lsp_signature.nvim',
-    event = 'VeryLazy',
-    opts = {},
-    config = function(_, opts)
-      require('lsp_signature').setup(opts)
-    end,
   },
 
   -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
